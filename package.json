@@ -1,11 +1,11 @@
 {
   "name": "node_webucks",
   "version": "1.0.0",
-  "description": "",
+  "description": "엄커풀(엄마 난 커서 풀스택 개발자가 될래요!)",
   "main": "sever.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,15 @@
   },
   "homepage": "https://github.com/wecode-bootcamp-korea/2-Node-webucks-5#readme",
   "dependencies": {
-    "nodemon": "^2.0.12"
-  }
+    "@prisma/client": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "prisma": "^3.0.2"
+  },
+  "type": "module"
 }

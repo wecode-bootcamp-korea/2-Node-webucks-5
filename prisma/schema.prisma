@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  Drink Drink[]
+
+  @@map("categories")
+}
+
+model Drink {
+  id          Int      @id @default(autoincrement())
+  koreanName  String   @map("korean_name")
+  englishName String   @map("english_name")
+  categoryId  Int      @map("category_id")
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  Image             Image[]
+  DrinksOnAllergies DrinksOnAllergies[]
+  Nutrition         Nutrition[]
+  @@map("drinks")
+}
+
+model Image {
+  id       Int    @id @default(autoincrement())
+  imageUrl String @map("image_url")
+  drinkId  Int    @map("drink_id")
+  drink    Drink  @relation(fields: [drinkId], references: [id])
+
+  @@map("images")
+}
+
+model Allergy {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  DrinksOnAllergies DrinksOnAllergies[]
+  @@map("allergies")
+}
+
+model DrinksOnAllergies {
+  id        Int     @id @default(autoincrement())
+  drinkId   Int     @map("drink_id")
+  allergyId Int     @map("allergy_id")
+  drink     Drink   @relation(fields: [drinkId], references: [id])
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+
+  @@map("drinks_allergies")
+}
+
+model Nutrition {
+  id      Int    @id @default(autoincrement())
+  name    String
+  drinkId Int
+  amount  String
+  drink   Drink  @relation(fields: [drinkId], references: [id])
+
+  @@map("nutritions")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  password     String
+  username     String?
+  address      String?
+  phoneNumber  Int?    @map("phone_number")
+  policyAgreed Boolean @default(true) @map("policy_agreed")
+
+  @@map("users")
+}
