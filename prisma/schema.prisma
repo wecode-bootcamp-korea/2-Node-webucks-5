@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Allergy {
+  id      Int                 @id @default(autoincrement())
+  nameKor String              @map("name_kor") @db.VarChar(50)
+  drinks  DrinksOnAllergies[]
+
+  @@map("allergies")
+}
+
+model Category {
+  id      Int     @id @default(autoincrement())
+  nameKor String  @map("name_kor") @db.VarChar(100)
+  drinks  Drink[]
+
+  @@map("categories")
+}
+
+model Drink {
+  id          Int                 @id @default(autoincrement())
+  nameKor     String              @map("name_kor") @db.VarChar(100)
+  nameEng     String              @map("name_eng") @db.VarChar(100)
+  description String              @db.VarChar(1000)
+  isNew       Boolean             @map("is_new")
+  category    Category            @relation(fields: [categoryId], references: [id])
+  categoryId  Int                 @map("category_id")
+  images      Image[]
+  nutrients   Nutrient[]
+  allergies   DrinksOnAllergies[]
+
+  @@map("drinks")
+}
+
+model DrinksOnAllergies {
+  id        Int     @id @default(autoincrement())
+  drink     Drink   @relation(fields: [drinkId], references: [id])
+  drinkId   Int     @map("drink_id")
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+  allergyId Int     @map("allergy_id")
+
+  @@map("drinks_allergies")
+}
+
+model Image {
+  id       Int    @id @default(autoincrement())
+  imageUrl String @map("image_url") @db.VarChar(200)
+  drink    Drink  @relation(fields: [drinkId], references: [id])
+  drinkId  Int    @map("drink_id")
+
+  @@map("images")
+}
+
+model Nutrient {
+  id      Int   @id @default(autoincrement())
+  natrium Int
+  drink   Drink @relation(fields: [drinkId], references: [id])
+  drinkId Int   @map("drink_id")
+
+  @@map("nutrients")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique @db.VarChar(50)
+  password     String  @db.VarChar(20)
+  userName     String? @map("user_name") @db.VarChar(20)
+  address      String? @db.VarChar(100)
+  phoneNumber  String? @map("phone_number") @db.VarChar(15)
+  policyAgreed Boolean @default(true) @map("policy_agreed")
+
+  @@map("users")
+}
