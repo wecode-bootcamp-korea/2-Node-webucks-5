@@ -1,0 +1,85 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id           Int    @id @default(autoincrement())
+  categoryName String @map("category_name")
+
+  Drink Drink[]
+  @@map("categories")
+}
+
+model Drink {
+  id          Int      @id @default(autoincrement())
+  koreanName  String   @map("korean_name")
+  enlishName  String   @map("english_name")
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int      @map("category_id")
+  description String
+  new         Boolean
+
+  Image        Image[]
+  DrinkAllergy DrinkAllergy[]
+  Nutrition    Nutrition[]
+  @@map("drinks")
+}
+
+model Image {
+  id      Int    @id @default(autoincrement())
+  image   String
+  drink   Drink  @relation(fields: [drinkId], references: [id])
+  drinkId Int    @map("drink_id")
+
+  @@map("images")
+}
+
+model DrinkAllergy {
+  id        Int     @id @default(autoincrement())
+  drink     Drink   @relation(fields: [drinkId], references: [id])
+  drinkId   Int     @map("drink_id")
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+  allergyId Int     @map("allergy_id")
+
+  @@map("drinks_allergies")
+}
+
+model Allergy {
+  id          Int    @id @default(autoincrement())
+  allergyName String @map("allergy_name")
+
+  DrinkAllergy DrinkAllergy[]
+  @@map("allergies")
+}
+
+model Nutrition {
+  id          Int     @id @default(autoincrement())
+  servingSize String  @map("serving_size")
+  kcal        Int
+  fat         Decimal
+  protein     Decimal
+  natrium     Decimal
+  sugars      Decimal
+  caffeine    Int
+  drink       Drink   @relation(fields: [drinkId], references: [id])
+  drinkId     Int     @map("drink_id")
+
+  @@map("nutritions")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  password     String
+  userName     String? @map("user_name")
+  address      String?
+  phoneNumber  Int?    @map("@phone_number")
+  policyAgreed Boolean @default(true)
+
+  @@map("users")
+}

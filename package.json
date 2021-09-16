@@ -1,11 +1,29 @@
 {
-  "name": "node_webucks",
+  "name": "2-node-webucks-5",
   "version": "1.0.0",
-  "description": "",
-  "main": "sever.js",
+  "description": "엄커풀(엄마 난 커서 풀스택 개발자가 될래요!)",
+  "main": "server.js",
+  "dependencies": {
+    "@babel/node": "^7.15.4",
+    "@prisma/client": "^3.0.2",
+    "babel": "^6.23.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.15.6",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "prettier": "2.4.0",
+    "prisma": "^3.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +35,5 @@
   "bugs": {
     "url": "https://github.com/wecode-bootcamp-korea/2-Node-webucks-5/issues"
   },
-  "homepage": "https://github.com/wecode-bootcamp-korea/2-Node-webucks-5#readme",
-  "dependencies": {
-    "nodemon": "^2.0.12"
-  }
+  "homepage": "https://github.com/wecode-bootcamp-korea/2-Node-webucks-5#readme"
 }
