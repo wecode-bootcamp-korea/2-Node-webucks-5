@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id           Int    @id @default(autoincrement())
+  categoryName String @map("category_name")
+
+  product Product[]
+  @@map(name: "categories")
+}
+
+model Product {
+  id                  Int                   @id @default(autoincrement())
+  korean_name         String                @map(name: "korean_name") @db.VarChar(100)
+  english_name        String                @map(name: "english_name") @db.VarChar(100)
+  description         String
+  category            Category              @relation(fields: [categoryId], references: [id])
+  categoryId          Int                   @map(name: "category_id")
+  image               Image                 @relation(fields: [imageId], references: [id])
+  imageId             Int                   @map(name: "image_id")
+  isNew               Boolean               @default(false) @map("is_new")
+  Nutrition           Nutrition?
+  ProductsOnAllergies ProductsOnAllergies[]
+
+  @@map(name: "products")
+}
+
+model Image {
+  id        Int    @id @default(autoincrement())
+  imageUrl  String @map(name: "image_url") @db.VarChar(300)
+  productId Int    @map(name: "product_id")
+
+  products Product[]
+  @@map(name: "images")
+}
+
+model ProductsOnAllergies {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int     @map(name: "product_id")
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+  allergyId Int     @map(name: "allergy_id")
+
+  @@map(name: "products_allergies")
+}
+
+model Allergy {
+  id           Int     @id @default(autoincrement())
+  allergyCause String? @map("allergy_cause") @db.VarChar(30)
+
+  ProductsOnAllergies ProductsOnAllergies[]
+  @@map(name: "allergies")
+}
+
+model Nutrition {
+  id          Int     @id @default(autoincrement())
+  servingSize String  @map(name: "serving_size") @db.VarChar(100)
+  kcal        Int
+  fat         Float
+  protein     Float
+  natrium     Float
+  sugar       Float
+  caffeine    Float
+  product     Product @relation(fields: [productId], references: [id])
+  productId   Int     @map(name: "product_id")
+
+  @@map(name: "nutritions")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  password     String  @db.VarChar(30)
+  username     String? @db.VarChar(30)
+  address      String?
+  phoneNumber  String? @map(name: "phone_number")
+  policyAgreed Boolean @default(true) @map(name: "policy_agreed")
+
+  @@map(name: "users")
+}
