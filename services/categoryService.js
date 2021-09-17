@@ -8,8 +8,8 @@ export default class CategoryService {
     return JSON.stringify(categoryList);
   };
 
-  getCategoryById = async _id => {
-    const [category] = await categoryDao.getCategoryById(_id);
+  getCategoryById = async id => {
+    const [category] = await categoryDao.getCategoryById(id);
     return JSON.stringify(category);
   };
 }

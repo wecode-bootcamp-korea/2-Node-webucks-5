@@ -10,11 +10,11 @@ export default class CategoryDao {
     `;
   };
 
-  getCategoryById = async _id => {
+  getCategoryById = async id => {
     return await prisma.$queryRaw`
       SELECT id, name_kor
         FROM categories
-       WHERE id = ${_id}
+       WHERE id = ${id}
     `;
   };
 }

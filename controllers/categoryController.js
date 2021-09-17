@@ -7,7 +7,7 @@ export default class CategoryController {
     return await categoryService.getCategoryList();
   };
 
-  getCategoryById = async _id => {
-    return await categoryService.getCategoryById(_id);
+  getCategoryById = async id => {
+    return await categoryService.getCategoryById(id);
   };
 }
