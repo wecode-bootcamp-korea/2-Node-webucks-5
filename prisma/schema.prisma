@@ -22,6 +22,7 @@ model Product {
   id             Int              @id @default(autoincrement())
   koreanName     String           @map("korean_name") @db.VarChar(50)
   englishName    String           @map("english_name") @db.VarChar(50)
+  descriptions   String           @db.VarChar(500)
   categoryId     Int              @map("category_id")
   category       Category         @relation(fields: [categoryId], references: [id])
   image          Image[]
@@ -60,8 +61,12 @@ model ProductAllergy {
 
 model Nutrition {
   id        Int     @id @default(autoincrement())
-  name      String  @db.VarChar(20)
-  amount    Int
+  kcal      Int
+  fat       Int
+  protein   Int
+  natrium   Int
+  sugal     Int
+  caffeine  Int
   productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id])
 
