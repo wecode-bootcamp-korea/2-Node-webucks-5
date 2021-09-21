@@ -10,4 +10,9 @@ const getDrinkDetail = async () => {
   return drinkDetail;
 };
 
-export default { getDrinkList, getDrinkDetail };
+const getDrinkDetailById = async id => {
+  const drinkDetailById = await drinkDao.getDrinkDetailById(id);
+  return drinkDetailById;
+};
+
+export default { getDrinkList, getDrinkDetail, getDrinkDetailById };

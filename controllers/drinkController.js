@@ -10,4 +10,10 @@ const getDrinkDetail = async (req, res) => {
   res.json(drinkDetail);
 };
 
-export default { getDrinkList, getDrinkDetail };
+const getDrinkDetailById = async (req, res) => {
+  const id = req.params.id;
+  const drinkDetailById = await drinkService.getDrinkDetailById(id);
+  res.json(drinkDetailById);
+};
+
+export default { getDrinkList, getDrinkDetail, getDrinkDetailById };
