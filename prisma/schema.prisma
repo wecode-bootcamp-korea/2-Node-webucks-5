@@ -78,8 +78,8 @@ model User {
   password     String
   userName     String? @map("user_name")
   address      String?
-  phoneNumber  Int?    @map("@phone_number")
-  policyAgreed Boolean @default(true)
+  phoneNumber  Int?    @map("phone_number")
+  policyAgreed Boolean @default(true) @map("policy_agreed")
 
   @@map("users")
 }
