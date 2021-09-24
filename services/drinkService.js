@@ -1,15 +1,14 @@
-import { DrinkDao } from '../models/drinkDao';
+// import drinkDao from '../models/drinkDao'
+import { drinkDao } from '../models';
 
-const drinkDao = new DrinkDao();
+const getDrinkList = async () => {
+  const drinkList = await drinkDao.getDrinkList();
+  return drinkList;
+};
 
-export default class DrinkService {
-  getDrinkList = async () => {
-    const drinkList = await drinkDao.getDrinkList();
-    return JSON.stringify(drinkList);
-  };
+const getDrinkDetail = async id => {
+  const [drinkDetail] = await drinkDao.getDrinkDetail(id);
+  return drinkDetail;
+};
 
-  getDrinkDetail = async id => {
-    const [drinkDetail] = await drinkDao.getDrinkDetail(id);
-    return JSON.stringify(drinkDetail);
-  };
-}
+export default { getDrinkList, getDrinkDetail };

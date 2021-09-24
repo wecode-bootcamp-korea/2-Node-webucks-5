@@ -1,15 +1,13 @@
-import CategoryDao from '../models/categoryDao';
+import { categoryDao } from '../models';
 
-const categoryDao = new CategoryDao();
+const getCategoryList = async () => {
+  const categoryList = await categoryDao.getCategoryList();
+  return categoryList;
+};
 
-export default class CategoryService {
-  getCategoryList = async () => {
-    const categoryList = await categoryDao.getCategoryList();
-    return JSON.stringify(categoryList);
-  };
+const getCategoryById = async id => {
+  const [category] = await categoryDao.getCategoryById(id);
+  return category;
+};
 
-  getCategoryById = async id => {
-    const [category] = await categoryDao.getCategoryById(id);
-    return JSON.stringify(category);
-  };
-}
+export default { getCategoryList, getCategoryById };

@@ -1,20 +1,18 @@
-import { PrismaClient } from '.prisma/client';
+import prisma from '../prisma';
 
-const prisma = new PrismaClient();
+const getCategoryList = async () => {
+  return await prisma.$queryRaw`
+    SELECT id, name_kor
+      FROM categories
+  `;
+};
 
-export default class CategoryDao {
-  getCategoryList = async () => {
-    return await prisma.$queryRaw`
-      SELECT id, name_kor
-        FROM categories
-    `;
-  };
+const getCategoryById = async id => {
+  return await prisma.$queryRaw`
+    SELECT id, name_kor
+      FROM categories
+      WHERE id = ${id}
+  `;
+};
 
-  getCategoryById = async id => {
-    return await prisma.$queryRaw`
-      SELECT id, name_kor
-        FROM categories
-       WHERE id = ${id}
-    `;
-  };
-}
+export default { getCategoryList, getCategoryById };

@@ -1,13 +1,15 @@
-import DrinkService from '../services/drinkService';
+// import drinkService from '../services/drinkService';
+import { drinkService } from '../services';
 
-const drinkService = new DrinkService();
+const getDrinkList = async (req, res) => {
+  const drinkList = await drinkService.getDrinkList();
+  res.send(drinkList);
+};
 
-export default class DrinkController {
-  getDrinkList = async () => {
-    return await drinkService.getDrinkList();
-  };
+const getDrinkDetail = async (req, res) => {
+  const id = req.params.id;
+  const drinkDetail = await drinkService.getDrinkDetail(id);
+  res.send(drinkDetail);
+};
 
-  getDrinkDetail = async id => {
-    return await drinkService.getDrinkDetail(id);
-  };
-}
+export default { getDrinkList, getDrinkDetail };

@@ -1,13 +1,14 @@
-import CategoryService from '../services/categoryService';
+import { categoryService } from '../services';
 
-const categoryService = new CategoryService();
+const getCategoryList = async (req, res) => {
+  const categoryList = await categoryService.getCategoryList();
+  res.json(categoryList);
+};
 
-export default class CategoryController {
-  getCategoryList = async () => {
-    return await categoryService.getCategoryList();
-  };
+const getCategoryById = async (req, res) => {
+  const id = req.params.id;
+  const categoryInfo = await categoryService.getCategoryById(id);
+  res.json(categoryInfo);
+};
 
-  getCategoryById = async id => {
-    return await categoryService.getCategoryById(id);
-  };
-}
+export default { getCategoryList, getCategoryById };
