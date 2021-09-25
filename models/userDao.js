@@ -15,6 +15,17 @@ const findAllUsers = async () => {
   `;
 };
 
+const getUserInfoByEmail = async (email) => {
+  return await prisma.$queryRaw`
+    SELECT
+      u.email
+    FROM
+      users u
+    WHERE
+      u.email = ${email}
+  `;
+};
+
 const createUser = async (email, password, username, address, phone_number, policy_agreed) => {
   return await prisma.$queryRaw`
     INSERT INTO
@@ -37,4 +48,4 @@ const createUser = async (email, password, username, address, phone_number, poli
   `;
 };
 
-export default { findAllUsers, createUser };
+export default { findAllUsers, createUser, getUserInfoByEmail };

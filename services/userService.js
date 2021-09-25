@@ -4,6 +4,10 @@ const findAllUsers = async () => {
   return await userDao.findAllUsers();
 };
 
+const getUserInfoByEmail = async (email) => {
+  return await userDao.getUserInfoByEmail(email);
+};
+
 const createUser = async (
   email, 
   password, 
@@ -22,4 +26,4 @@ const createUser = async (
   );
 };
 
-export default { findAllUsers, createUser };
+export default { findAllUsers, createUser, getUserInfoByEmail };

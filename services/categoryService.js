@@ -6,3 +6,6 @@ const getCategoryList = async () => {
 };
 
 export default { getCategoryList };
+
+
+//console.log(module.exports);

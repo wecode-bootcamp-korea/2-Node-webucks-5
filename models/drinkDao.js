@@ -71,5 +71,4 @@ const getDrinkDetailById = async id => {
   `;
 };
 
-
 export default { getDrinkList, getDrinkDetail, getDrinkDetailById };
