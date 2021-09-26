@@ -1,9 +1,9 @@
 import express from 'express';
-import categoryController from '../controllers/categoryController';
+import categoryController from '../controllers/categoryController.js';
 
-const router = express.Router()
+const categoryRouter = express.Router()
 
-router.get('/categories', categoryController.getAllCategories) // '/products' 핸들링 하는 컨트롤러 함수
-router.post('/new-category', categoryController.createCategory)
+categoryRouter.get('/', categoryController.getAllCategories)
+categoryRouter.post('/new-category', categoryController.createCategory)
 
-module.exports = router // 이렇게 내보내면 부모 router 에 자동으로 연결됩니다.
+export default categoryRouter;

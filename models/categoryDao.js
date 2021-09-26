@@ -1,15 +1,7 @@
-import prisma from './client';
-
-const createCategory = async (category_name) => {
-  console.log('hello')
-  return await prisma.$queryRaw`
-    INSERT INTO categories (category_name)
-    VALUES  (${category_name});
-  `;
-}
+import prisma from '../prisma/index.js';
 
 const getAllCategories = async () => {
-  console.log('hello')
+  console.log('dao hello1')
   return await prisma.$queryRaw`
   SELECT  c.id
       ,   c.category_name
@@ -17,10 +9,15 @@ const getAllCategories = async () => {
   `;
 }
 
-app.post('/categories', createCategory);
-app.get('/categories', getAllCategories);
+const createCategory = async (category_name) => {
+  console.log('dao hello')
+  return await prisma.$queryRaw`
+    INSERT INTO categories (category_name)
+    VALUES  (${category_name});
+  `;
+}
 
-module.exports = {
-  createCategory, getAllCategories
+export default {
+  getAllCategories, createCategory
 }
 

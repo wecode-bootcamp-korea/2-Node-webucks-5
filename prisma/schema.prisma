@@ -1,59 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model Category {
-  id           Int    @id @default(autoincrement())
-  categoryName String @map("category_name")
+  id           Int     @id @default(autoincrement())
+  categoryName String  @map("category_name")
+  Drink        Drink[]
 
-  Drink Drink[]
   @@map("categories")
 }
 
 model Drink {
-  id          Int      @id @default(autoincrement())
-  koreanName  String   @map("korean_name")
-  enlishName  String   @map("english_name")
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  Int      @map("category_id")
-  description String
-  new         Boolean
-
-  Image        Image[]
+  id           Int            @id @default(autoincrement())
+  koreanName   String         @map("korean_name")
+  enlishName   String         @map("english_name")
+  categoryId   Int            @map("category_id")
+  description  String
+  new          Boolean
+  category     Category       @relation(fields: [categoryId], references: [id])
   DrinkAllergy DrinkAllergy[]
+  Image        Image[]
   Nutrition    Nutrition[]
+
+  @@index([categoryId], map: "drinks_category_id_fkey")
   @@map("drinks")
 }
 
 model Image {
   id      Int    @id @default(autoincrement())
   image   String
-  drink   Drink  @relation(fields: [drinkId], references: [id])
   drinkId Int    @map("drink_id")
+  drink   Drink  @relation(fields: [drinkId], references: [id])
 
+  @@index([drinkId], map: "images_drink_id_fkey")
   @@map("images")
 }
 
 model DrinkAllergy {
   id        Int     @id @default(autoincrement())
-  drink     Drink   @relation(fields: [drinkId], references: [id])
   drinkId   Int     @map("drink_id")
-  allergy   Allergy @relation(fields: [allergyId], references: [id])
   allergyId Int     @map("allergy_id")
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+  drink     Drink   @relation(fields: [drinkId], references: [id])
 
+  @@index([allergyId], map: "drinks_allergies_allergy_id_fkey")
+  @@index([drinkId], map: "drinks_allergies_drink_id_fkey")
   @@map("drinks_allergies")
 }
 
 model Allergy {
-  id          Int    @id @default(autoincrement())
-  allergyName String @map("allergy_name")
-
+  id           Int            @id @default(autoincrement())
+  allergyName  String         @map("allergy_name")
   DrinkAllergy DrinkAllergy[]
+
   @@map("allergies")
 }
 
@@ -66,9 +70,10 @@ model Nutrition {
   natrium     Decimal
   sugars      Decimal
   caffeine    Int
-  drink       Drink   @relation(fields: [drinkId], references: [id])
   drinkId     Int     @map("drink_id")
+  drink       Drink   @relation(fields: [drinkId], references: [id])
 
+  @@index([drinkId], map: "nutritions_drink_id_fkey")
   @@map("nutritions")
 }
 
