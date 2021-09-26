@@ -21,7 +21,9 @@
   "dependencies": {
     "@prisma/client": "^3.0.2",
     "express": "^4.17.1",
-    "nodemon": "^2.0.12"
+    "express-validator": "^6.12.1",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
