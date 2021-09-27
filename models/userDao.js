@@ -15,10 +15,11 @@ const findAllUsers = async () => {
   `;
 };
 
-const getUserInfoByEmail = async (email) => {
+const getUserInfo = async (email) => {
   return await prisma.$queryRaw`
     SELECT
-      u.email
+      u.email, 
+      u.password
     FROM
       users u
     WHERE
@@ -48,4 +49,4 @@ const createUser = async (email, hash, username, address, phone_number, policy_a
   `;
 };
 
-export default { findAllUsers, createUser, getUserInfoByEmail };
+export default { findAllUsers, createUser, getUserInfo };
