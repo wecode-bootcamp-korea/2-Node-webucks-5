@@ -3,8 +3,8 @@ import Controller from '../controllers';
 
 const Route = express.Router();
 
-
-Route.get('/', Controller.userController.getUserInfo);
-Route.post('user/create', Controller.userController.createUser);
+Route.get('/user', Controller.userController.getUserInfo);
+Route.post('/user/create', Controller.userController.createUser);
+Route.post('/user/login', Controller.userController.userLogin)
 
 export default Route;
