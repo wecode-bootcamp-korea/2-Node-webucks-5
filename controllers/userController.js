@@ -1,4 +1,5 @@
 import { userService } from '../services';
+import bcrypt from "bcryptjs";
 
 const findAllUsers = async (req, res) => {
   try {
@@ -25,6 +26,8 @@ const createUser = async (req, res) => {
     } = req.body;
 
     const [ userInfo ] = await userService.getUserInfoByEmail (email);
+
+    const hash = await bcrypt.hash(password, 10);
     
     if (userInfo !== undefined) {
       res.json({
@@ -33,7 +36,7 @@ const createUser = async (req, res) => {
     } else {
       await userService.createUser(
         email, 
-        password, 
+        hash, 
         username, 
         address, 
         phone_number, 

@@ -10,7 +10,7 @@ const getUserInfoByEmail = async (email) => {
 
 const createUser = async (
   email, 
-  password, 
+  hash, 
   username, 
   address, 
   phone_number, 
@@ -18,7 +18,7 @@ const createUser = async (
 ) => {
   return await userDao.createUser(
     email, 
-    password, 
+    hash, 
     username, 
     address, 
     phone_number, 

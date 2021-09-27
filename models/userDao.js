@@ -26,7 +26,7 @@ const getUserInfoByEmail = async (email) => {
   `;
 };
 
-const createUser = async (email, password, username, address, phone_number, policy_agreed) => {
+const createUser = async (email, hash, username, address, phone_number, policy_agreed) => {
   return await prisma.$queryRaw`
     INSERT INTO
       users(
@@ -39,7 +39,7 @@ const createUser = async (email, password, username, address, phone_number, poli
       )
     VALUES (
       ${email},
-      ${password},
+      ${hash},
       ${username},
       ${address},
       ${phone_number},
