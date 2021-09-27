@@ -10,7 +10,7 @@ const getUserInfoList = async () => {
          , phone_number
          , policy_agreed
      FROM users
-  `;
+  ;`;
 };
 
 const getUserInfoByEmail = async email => {
@@ -24,7 +24,7 @@ const getUserInfoByEmail = async email => {
          , policy_agreed
      FROM users
     WHERE email = ${email}
-  `;
+  ;`;
 };
 
 const createUser = async bodyObject => {
@@ -35,7 +35,7 @@ const createUser = async bodyObject => {
     (email, password, user_name, address, phone_number, policy_agreed) 
     VALUES
     (${email}, ${password}, ${userName}, ${address}, ${phoneNumber}, ${policyAgreed});
-  `;
+  ;`;
 };
 
 export default { getUserInfoList, getUserInfoByEmail, createUser };

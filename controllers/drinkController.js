@@ -3,13 +3,13 @@ import { drinkService } from '../services';
 
 const getDrinkList = async (req, res) => {
   const drinkList = await drinkService.getDrinkList();
-  res.send(drinkList);
+  res.json(drinkList);
 };
 
 const getDrinkDetail = async (req, res) => {
   const id = req.params.id;
   const drinkDetail = await drinkService.getDrinkDetail(id);
-  res.send(drinkDetail);
+  res.json(drinkDetail);
 };
 
 export default { getDrinkList, getDrinkDetail };
