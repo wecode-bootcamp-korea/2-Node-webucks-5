@@ -1,5 +1,9 @@
 import { userService } from '../services';
+import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
 
 const findAllUsers = async (req, res) => {
   try {
@@ -27,7 +31,6 @@ const createUser = async (req, res) => {
     } = req.body;
 
     const [ userInfo ] = await userService.getUserInfo(email);
-    console.log(userInfo);
     const hash = await bcrypt.hash(password, 10);
     
     if (userInfo !== undefined) {
@@ -64,7 +67,8 @@ const logIn = async (req, res) => {
   try {
     const validPw = await bcrypt.compare(password, userInfo.password);
     if (validPw) {
-      res.send("Valid Email and Password!");
+      const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET);
+      res.send({ msg : "Valid Email and Password!", accessToken : accessToken });
     } else {
       res.send("Wrong Password!");
     }

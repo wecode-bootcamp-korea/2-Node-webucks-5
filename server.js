@@ -5,7 +5,7 @@ import router from "./routes";
 dotenv.config();
 
 const app = express();
-const PORT = 8000 | process.env.PORT;
+const PORT = process.env.PORT;
 
 app.use(express.json());  // post request body parser
 app.use(router);
