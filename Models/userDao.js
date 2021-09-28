@@ -1,38 +1,47 @@
-import prisma from "../prisma/index";
+import prisma from '../prisma/index';
 
-const createUser = async (
-  email,
-  password,
-  username,
-  address,
-  phone_number,
-  policy_agreed
-) => {
+const createUser = async userData => {
+  const {
+    email,
+    hashedPassword,
+    username,
+    address,
+    phone_number,
+    policy_agreed,
+  } = userData;
   return await prisma.$queryRaw`
-  INSERT INTO 
+  INSERT INTO
     users (
-        email, 
-        password, 
-        username, 
-        address, 
-        phone_number, 
+        email,
+        password,
+        username,
+        address,
+        phone_number,
         policy_agreed
         )
     VALUES (
-        ${email}, 
-        ${password}, 
-        ${username}, 
-        ${address}, 
-        ${phone_number}, 
+        ${email},
+        ${hashedPassword},
+        ${username},
+        ${address},
+        ${phone_number},
         ${policy_agreed})
   `;
 };
 
 const getUserEmail = async () => {
   return await prisma.$queryRaw`
-    SELECT email
-    FROM users
+    SELECT u.email
+    FROM users u
   `;
 };
 
-export default { createUser, getUserEmail };
+const getEmailAndPassword = async () => {
+  return await prisma.$queryRaw`
+  SELECT u.email,
+         u.password
+  FROM users u
+  `;
+};
+
+export default { createUser, getUserEmail, getEmailAndPassword };

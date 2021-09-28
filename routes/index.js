@@ -1,4 +1,9 @@
-import userRouter from "./userRouter";
-import productRouter from "./productRouter";
+import express from 'express';
+import userRouter from './userRouter';
+import productRouter from './productRouter';
+const router = express.Router();
 
-export default { userRouter, productRouter };
+router.use('/users', userRouter);
+router.use('/products', productRouter);
+
+export default router;

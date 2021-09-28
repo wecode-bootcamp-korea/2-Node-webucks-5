@@ -1,4 +1,4 @@
-import prisma from "../prisma/index";
+import prisma from '../prisma/index';
 
 const getProductList = async () => {
   return await prisma.$queryRaw`
@@ -11,7 +11,7 @@ const getProductList = async () => {
   `;
 };
 
-const getProductDetail = async (id) => {
+const getProductDetail = async id => {
   return await prisma.$queryRaw`
     SELECT p.id, 
            p.korean_name, 

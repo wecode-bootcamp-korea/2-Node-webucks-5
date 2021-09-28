@@ -1,10 +1,10 @@
-import productDao from "../Models/productDao";
+import productDao from '../Models/productDao';
 
 const getProductList = async () => {
   return await productDao.getProductList();
 };
 
-const getProductDetail = async (id) => {
+const getProductDetail = async id => {
   return await productDao.getProductDetail(id);
 };
 

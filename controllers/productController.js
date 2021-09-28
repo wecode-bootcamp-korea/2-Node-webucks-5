@@ -1,4 +1,4 @@
-import productService from "../services/productService";
+import productService from '../services/productService';
 
 const getProductList = async (req, res) => {
   res.send(await productService.getProductList());
@@ -6,11 +6,11 @@ const getProductList = async (req, res) => {
 
 const getProductDetail = async (req, res) => {
   const id = req.params.id;
-  res.send(await productService.getProductDetail(id));
+  return res.send(await productService.getProductDetail(id));
 };
 
 const getCategory = async (req, res) => {
-  res.send(await productService.getCategory());
+  return res.send(await productService.getCategory());
 };
 
 export default { getCategory, getProductDetail, getProductList };
