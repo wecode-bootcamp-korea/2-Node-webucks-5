@@ -19,7 +19,8 @@ const createUser = async bodyObject => {
     return { msg: '중복된 이메일입니다. 다른 이메일을 입력해주세요.' };
   } else {
     const pw = bodyObject.password;
-    bodyObject.password = await bcryptjs.hash(pw, 10);
+    bodyObject.password = await bcryptjs.hash(pw, 15);
+    // bodyObject.password = await bcryptjs.hash(pw, process.env.PASSWORD_SALT);
 
     try {
       await userDao.createUser(bodyObject);
@@ -42,7 +43,9 @@ const login = async (email, password) => {
     const isValid = await bcryptjs.compare(password, userInfo.password);
     if (isValid) {
       const id = userInfo.id;
-      const token = jwt.sign({ id: id }, 'myKey', { expiresIn: 3600 });
+      const token = jwt.sign({ id: id }, process.env.ACCESS_TOKEN_SIGN, {
+        expiresIn: 3600,
+      });
       return { msg: '로그인 성공', token: token };
     } else {
       return { msg: '비밀번호가 일치하지 않습니다.' };

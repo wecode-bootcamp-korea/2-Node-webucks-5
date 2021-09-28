@@ -34,6 +34,8 @@ model Drink {
   isNew       Boolean             @map("is_new")
   category    Category            @relation(fields: [categoryId], references: [id])
   categoryId  Int                 @map("category_id")
+  createdAt   DateTime?           @map("created_at")
+  updatedAt   DateTime?           @map("updated_at")
   images      Image[]
   nutrients   Nutrient[]
   allergies   DrinksOnAllergies[]
@@ -53,7 +55,7 @@ model DrinksOnAllergies {
 
 model Image {
   id       Int    @id @default(autoincrement())
-  imageUrl String @map("image_url") @db.VarChar(200)
+  imageUrl String @map("image_url") @db.VarChar(2000)
   drink    Drink  @relation(fields: [drinkId], references: [id])
   drinkId  Int    @map("drink_id")
 
@@ -61,22 +63,26 @@ model Image {
 }
 
 model Nutrient {
-  id      Int   @id @default(autoincrement())
-  natrium Int
-  drink   Drink @relation(fields: [drinkId], references: [id])
-  drinkId Int   @map("drink_id")
+  id      Int     @id @default(autoincrement())
+  natrium Decimal @db.Decimal(8, 2)
+  drink   Drink   @relation(fields: [drinkId], references: [id])
+  drinkId Int     @map("drink_id")
 
   @@map("nutrients")
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  email        String  @unique @db.VarChar(50)
-  password     String  @db.VarChar(20)
-  userName     String? @map("user_name") @db.VarChar(20)
-  address      String? @db.VarChar(100)
-  phoneNumber  String? @map("phone_number") @db.VarChar(15)
-  policyAgreed Boolean @default(true) @map("policy_agreed")
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @db.VarChar(50)
+  password     String    @db.VarChar(200)
+  userName     String?   @map("user_name") @db.VarChar(20)
+  address      String?   @db.VarChar(100)
+  phoneNumber  String?   @map("phone_number") @db.VarChar(15)
+  policyAgreed Boolean   @default(true) @map("policy_agreed")
+  isDeleted    Boolean   @default(false) @map("is_deleted")
+  createdAt    DateTime? @map("created_at")
+  updatedAt    DateTime? @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
 
   @@map("users")
 }

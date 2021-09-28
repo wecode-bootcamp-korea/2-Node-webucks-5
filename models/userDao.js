@@ -32,9 +32,9 @@ const createUser = async bodyObject => {
     bodyObject;
   return await prisma.$queryRaw`
     INSERT INTO users
-    (email, password, user_name, address, phone_number, policy_agreed) 
+    (email, password, user_name, address, phone_number, created_at) 
     VALUES
-    (${email}, ${password}, ${userName}, ${address}, ${phoneNumber}, ${policyAgreed});
+    (${email}, ${password}, ${userName}, ${address}, ${phoneNumber}, ${new Date()});
   ;`;
 };
 
