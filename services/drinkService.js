@@ -1,16 +1,15 @@
 import drinkDao from '../models/drinkDao.js'
 
 const getAllDrinks = async () => {
-  console.log('drinkDao hello')
   const drinks = await drinkDao.getAllDrinks();
   return drinks;
 }
 
-const getDrinkDetail = async () => {
-  const drinks = await drinkDao.getDrinkDetail();
+const getDrinkById = async id => {
+  const drinks = await drinkDao.getDrinkById(id);
   return drinks;
 }
 
 export default{
-  getAllDrinks, getDrinkDetail
+  getAllDrinks, getDrinkById
 }

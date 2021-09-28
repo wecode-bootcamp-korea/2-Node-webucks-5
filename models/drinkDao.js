@@ -1,39 +1,64 @@
 import prisma from "../prisma/index.js";
 
 const getAllDrinks = async () => {
-  console.log('drinkDao hello')
-  return await prisma.$queryRaw`
-  SELECT  d.id
-        , d.korean_name
-        , d.english_name
-        , d.category_id
-        , d.description
-        , d.new
-  FROM  drinks d
-  JOIN  categories c
-    ON  d.category_id = c.id;
-  `;
+      return await prisma.$queryRaw`
+      SELECT  d.id
+            , d.korean_name
+            , i.image
+      FROM    drinks d
+      LEFT JOIN images i
+      ON      i.drink_id=d.id
+`;
 }
 
-const getDrinkDetail = async () => {
-  return await prisma.$queryRaw`
-  SELECT  n.id
-        , n.serving_size
-        , n.kcal
-        , n.fat
-        , n.protein
-        , n.natrium
-        , n.sugars
-        , n.caffeine
-        , n.drink_id
-  FROM  nutritions n
-      , drinks d
-  WHERE n.drink_id = d.id;
-  `;
+const getDrinkById = async id => {
+return await prisma.$queryRaw`
+      SELECT  d.id
+            , d.korean_name
+            , d.english_name
+            , c.category_name
+            , d.description
+            , d.new
+            , n.id
+            , n.serving_size
+            , n.kcal
+            , n.fat
+            , n.protein
+            , n.natrium
+            , n.sugars
+            , n.caffeine
+            , i.image
+            , a.allergy_name
+      FROM
+            drinks d
+      LEFT JOIN
+            categories c
+      ON
+            d.category_id = c.id
+      LEFT JOIN
+            nutritions n
+      ON   
+            n.drink_id = d.id
+      LEFT JOIN
+            images i
+      ON
+            i.drink_id = d.id
+      INNER JOIN
+            drinks_allergies da
+      ON
+            da.drink_id = d.id
+      INNER JOIN
+            allergies a
+      ON
+            da.allergy_id = a.id
+      WHERE   
+            d.id = ${id}
+`;
 }
+
 
 export default {
-  getAllDrinks, getDrinkDetail
+getAllDrinks, getDrinkById
 }
 
 

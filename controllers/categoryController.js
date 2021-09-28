@@ -1,8 +1,13 @@
 import categoryService from '../services/categoryService.js';
 
 const getAllCategories = async (req, res) => {
-  console.log('cont hello1')
   const categories = await categoryService.getAllCategories();
+  res.json(categories);
+}
+
+const getCategoryById = async (req, res) => {
+  const id = req.params.id;
+  const categories = await categoryService.getCategoryById(id);
   res.json(categories);
 }
 
@@ -13,5 +18,5 @@ const createCategory = async (req, res) => {
 }
 
 export default {
-  getAllCategories, createCategory
+  getAllCategories, getCategoryById, createCategory
 };
