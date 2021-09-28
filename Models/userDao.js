@@ -6,8 +6,8 @@ const createUser = async userData => {
     hashedPassword,
     username,
     address,
-    phone_number,
-    policy_agreed,
+    phoneNumber,
+    policyAgreed,
   } = userData;
   return await prisma.$queryRaw`
   INSERT INTO
@@ -24,8 +24,8 @@ const createUser = async userData => {
         ${hashedPassword},
         ${username},
         ${address},
-        ${phone_number},
-        ${policy_agreed})
+        ${phoneNumber},
+        ${policyAgreed})
   `;
 };
 

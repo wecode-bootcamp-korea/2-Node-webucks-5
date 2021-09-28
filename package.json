@@ -25,7 +25,8 @@
     "express-validator": "^6.12.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",

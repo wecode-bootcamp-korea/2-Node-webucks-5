@@ -1,16 +1,16 @@
 import productService from '../services/productService';
 
 const getProductList = async (req, res) => {
-  res.send(await productService.getProductList());
+  return res.status(200).send(await productService.getProductList());
 };
 
 const getProductDetail = async (req, res) => {
   const id = req.params.id;
-  return res.send(await productService.getProductDetail(id));
+  return res.status(200).send(await productService.getProductDetail(id));
 };
 
 const getCategory = async (req, res) => {
-  return res.send(await productService.getCategory());
+  return res.status(200).send(await productService.getCategory());
 };
 
 export default { getCategory, getProductDetail, getProductList };

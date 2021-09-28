@@ -4,7 +4,8 @@ import morgan from 'morgan';
 import router from './routes/index';
 
 const app = express();
-const PORT = 8000 | process.env.PORT;
+dotenv.config();
+const PORT = 8000 || process.env.PORT;
 
 app.use(express.json());
 app.use(morgan('dev'));
