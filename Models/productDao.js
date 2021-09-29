@@ -13,20 +13,20 @@ const getProductList = async () => {
 
 const getProductDetail = async id => {
   return await prisma.$queryRaw`
-    SELECT p.id, 
-           p.korean_name, 
-           p.english_name, 
-           p.description, 
-           p.is_new, 
-           i.image_url, 
-           c.category_name, 
-           n.serving_size, 
-           n.kcal, 
-           n.fat, 
-           n.protein, 
-           n.natrium, 
-           n.sugar, 
-           n.caffeine, 
+    SELECT p.id,
+           p.korean_name,
+           p.english_name,
+           p.description,
+           p.is_new,
+           i.image_url,
+           c.category_name,
+           n.serving_size,
+           n.kcal,
+           n.fat,
+           n.protein,
+           n.natrium,
+           n.sugar,
+           n.caffeine,
            a.allergy_cause
     FROM products p
     LEFT JOIN images i
@@ -50,4 +50,20 @@ const getCategory = async () => {
   `;
 };
 
-export default { getCategory, getProductList, getProductDetail };
+//! TODO **************************
+const getLikeInfo = async email => {
+  return await prisma.$queryRaw`
+  SELECT l.id,
+         u.email, 
+         p.korean_name
+         p.english_name
+  FROM likes l
+  JOIN products p
+  ON p.id = l.products_id
+  JOIN users u
+  ON u.id = l.user_id
+  WHERE u.email = ${email}
+  `;
+};
+
+export default { getCategory, getProductList, getProductDetail, getLikeInfo };

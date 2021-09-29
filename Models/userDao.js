@@ -1,14 +1,8 @@
 import prisma from '../prisma/index';
 
 const createUser = async userData => {
-  const {
-    email,
-    hashedPassword,
-    username,
-    address,
-    phoneNumber,
-    policyAgreed,
-  } = userData;
+  const { email, password, username, address, phoneNumber, policyAgreed } =
+    userData;
   return await prisma.$queryRaw`
   INSERT INTO
     users (
@@ -21,7 +15,7 @@ const createUser = async userData => {
         )
     VALUES (
         ${email},
-        ${hashedPassword},
+        ${password},
         ${username},
         ${address},
         ${phoneNumber},

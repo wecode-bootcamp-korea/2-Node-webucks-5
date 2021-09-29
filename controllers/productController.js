@@ -1,4 +1,4 @@
-import productService from '../services/productService';
+import { productService } from '../services';
 
 const getProductList = async (req, res) => {
   return res.status(200).send(await productService.getProductList());

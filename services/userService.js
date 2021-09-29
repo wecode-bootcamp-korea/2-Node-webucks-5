@@ -1,4 +1,4 @@
-import userDao from '../Models/userDao';
+import { userDao } from '../Models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
@@ -33,19 +33,10 @@ const validateData = async userData => {
 };
 
 const createUser = async userData => {
-  const { email, password, username, address, phoneNumber, policyAgreed } =
-    userData;
   await validateData(userData);
-  const hashedPassword = await convertToHashedPassword(password);
-  const userDataWithHashedPassword = {
-    email,
-    hashedPassword,
-    username,
-    address,
-    phoneNumber,
-    policyAgreed,
-  };
-  return await userDao.createUser(userDataWithHashedPassword);
+  const hashedPassword = await convertToHashedPassword(userData.password);
+  userData.password = hashedPassword;
+  return await userDao.createUser(userData);
 };
 
 const isValidUser = async userData => {

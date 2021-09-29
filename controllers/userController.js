@@ -1,4 +1,8 @@
-import userService from '../services/userService';
+import { userService } from '../services';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const createUser = async (req, res) => {
   try {
@@ -23,4 +27,16 @@ const loginUser = async (req, res) => {
   }
 };
 
-export default { createUser, loginUser };
+const testToken = async (req, res) => {
+  const userData = req.body;
+  const access_token = await userService.loginUser(userData);
+
+  console.log('access_token :', access_token);
+  console.log('------------------------------------------------------');
+  console.log('req cookie :', req.cookies);
+  const isValid = jwt.verify(req.cookies.access_token, process.env.SECRET);
+  console.log(isValid);
+  res.send('message');
+};
+
+export default { createUser, loginUser, testToken };
