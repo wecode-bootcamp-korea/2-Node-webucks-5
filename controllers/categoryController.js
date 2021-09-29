@@ -1,16 +1,27 @@
-import Service from '../services';
+import { categoryService } from '../services';
 
-const getCategory = async (req, res) => {
-  const getCategory = await Service.categoryService.getCategory()
-  res.json(getCategory);
+const getCategories = async (req, res) => {
+  try{
+    const getCategories = await categoryService.getCategories();
+    res.json(getCategories);
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
-const createCategory = async (req, res) => {
-  const createCategory = await Service.categoryService.createCategory()
-  res.json(createCategory);
-};
+const getCategoryByName = async (req, res) => {
+  try{
+    const name = req.params.name;
+    const getCategoryByName = await categoryService.getCategoryByName(name);
+    res.json(getCategoryByName)
+  }
+  catch(err) {
+    console.error(err);
+  };
+}
 
 export default {
-  getCategory,
-  createCategory
+  getCategories,
+  getCategoryByName
 };

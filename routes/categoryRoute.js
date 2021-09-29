@@ -1,9 +1,9 @@
 import express from 'express';
-import Controller from '../controllers';
+import { categoryController } from '../controllers';
 
 const Route = express.Router();
 
-Route.get('/category', Controller.categoryController.getCategory);
-Route.post('/category/create', Controller.categoryController.createCategory);
+Route.get('/category', categoryController.getCategories);
+Route.get('/category/:name', categoryController.getCategoryByName);
 
 export default Route;

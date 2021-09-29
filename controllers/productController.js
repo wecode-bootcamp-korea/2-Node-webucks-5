@@ -1,29 +1,38 @@
-import Service from '../services';
+import { productService } from '../services';
 
 const productList = async (req, res) => {
-  const productList = await Service.productService.productList()
-  res.json(productList);
+  try{
+    const productList = await productService.productList();
+    res.json(productList);
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
-const productDetail = async (req, res) => {
-  const productDetail = await Service.productService.productDetail()
-  res.json(productDetail);
+const productsDetail = async (req, res) => {
+  try{
+    const productsDetail = await productService.productsDetail();
+    res.json(productsDetail);
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
 const productDetailById = async (req, res) => {
-  const id = req.params.id
-  const productDetailById = await Service.productService.productDetailById(id)
-  res.json(productDetailById);
-};
-
-const createProduct = async (req, res) => {
-  const createProduct = await Service.productService.createProduct()
-  res.json(createProduct);
+  try{
+    const id = req.params.id;
+    const productDetailById = await productService.productDetailById(id);
+    res.json(productDetailById);
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
 export default {
   productList,
-  productDetail,
+  productsDetail,
   productDetailById,
-  createProduct
 };

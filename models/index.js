@@ -2,7 +2,7 @@ import categoryDao from './categoryDao';
 import productDao from './productDao';
 import userDao from './userDao';
 
-export default {
+export {
   categoryDao,
   productDao,
   userDao

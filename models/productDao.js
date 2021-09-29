@@ -10,7 +10,7 @@ const productsList = async () => {
   `;
 };
 
-const productDetail = async () => {
+const productsDetail = async () => {
   return await prisma.$queryRaw`
     SELECT  p.id
           , p.korean_name
@@ -35,7 +35,7 @@ const productDetail = async () => {
       ON  i.product_id = p.id
     JOIN  nutritions n
       ON  n.product_id = p.id;
-  `;
+    `;
 };
 
 const productDetailById = async (id) => {
@@ -64,20 +64,11 @@ const productDetailById = async (id) => {
     JOIN  nutritions n
       ON  n.product_id = p.id
     WHERE p.id = ${id};
-  `;
+    `;
 };
-
-const createProduct = async () => {
-  return await prisma.$queryRaw`
-    INSERT INTO categories (name)
-    VALUES  ('coldbrew'),
-            ('brewed');
-  `;
-}
 
 export default {
   productsList,
-  productDetail,
+  productsDetail,
   productDetailById,
-  createProduct
 };

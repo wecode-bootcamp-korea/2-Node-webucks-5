@@ -1,14 +1,14 @@
-import Dao from '../models';
+import { categoryDao } from '../models';
 
-const getCategory = async () => {
-  return await Dao.categoryDao.getCategory()
+const getCategories = async () => {
+  return await categoryDao.getCategories();
 };
 
-const createCategory = async () => {
-  return await Dao.categoryDao.createCategory()
-};
+const getCategoryByName = async (name) => {
+  return await categoryDao.getCategoryByName(name);
+}
 
 export default {
-  getCategory,
-  createCategory
+  getCategories,
+  getCategoryByName
 };

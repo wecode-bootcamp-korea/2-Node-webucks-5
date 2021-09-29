@@ -1,24 +1,19 @@
-import Dao from '../models';
+import { productDao } from '../models';
 
 const productList = async () => {
-  return await Dao.productDao.productsList()
+  return await productDao.productsList();
 };
 
-const productDetail = async () => {
-  return await Dao.productDao.productDetail()
+const productsDetail = async () => {
+  return await productDao.productsDetail();
 };
 
 const productDetailById = async (id) => {
-  return await Dao.productDao.productDetailById(id)
-};
-
-const createProduct = async () => {
-  return await Dao.productDao.createProduct()
+  return await productDao.productDetailById(id);
 };
 
 export default {
   productList,
-  productDetail,
+  productsDetail,
   productDetailById,
-  createProduct
 };

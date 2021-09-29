@@ -1,13 +1,27 @@
 import prisma from '../prisma';
 
-const createUser = async (email, password, user_name, address, phone_number, policy_agreed) => { 
+const createUser = async (userData) => { 
+  const { email, password, user_name, address, phone_number, policy_agreed } = userData;
   return await prisma.$queryRaw`
-    INSERT INTO users(email, password, user_name, address, phone_number, policy_agreed)
-    VALUES  (${email}, ${password}, ${user_name}, ${address}, ${phone_number}, ${policy_agreed})
+    INSERT INTO users (
+                  email
+                , password
+                , user_name
+                , address
+                , phone_number
+                , policy_agreed
+                )
+    VALUES( ${email}
+          , ${password}
+          , ${user_name}
+          , ${address}
+          , ${phone_number}
+          , ${policy_agreed}
+          );
   `;
 };
 
-const getUserInfo = async () => {
+const getAllUserInfo = async () => {
   return await prisma.$queryRaw`
     SELECT  u.email
           , u.password
@@ -29,14 +43,16 @@ const checkUserEmail = async (email) => {
 
 const userLogin = async (email) => {
   return await prisma.$queryRaw`
-    SELECT u.email, u.password
+    SELECT  u.email
+          , u.password
     FROM  users u
+    WHERE u.email = ${email}
   `;
 }
 
 export default {
   createUser,
-  getUserInfo,
+  getAllUserInfo,
   checkUserEmail,
   userLogin
 };

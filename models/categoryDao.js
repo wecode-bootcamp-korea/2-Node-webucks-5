@@ -1,22 +1,22 @@
 import prisma from '../prisma/index.js';
 
 
-const getCategory = async () => {
+const getCategories = async () => {
   return await prisma.$queryRaw`
-    SELECT  name
-    FROM    categories;
-  `;
+    SELECT  c.name
+    FROM    categories c;
+    `;
 };
 
-const createCategory = async () => {
+const getCategoryByName = async (name) => {
   return await prisma.$queryRaw`
-    INSERT INTO categories (name)
-    VALUES  ('coldbrew')
-          , ('brewed');    
-  `;
-};
+    SELECT  c.name
+    FROM    categories c
+    WHERE   c.name = ${name}
+    `;
+}
 
 export default {
-  getCategory,
-  createCategory
+  getCategories,
+  getCategoryByName
 };

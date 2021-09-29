@@ -1,24 +1,54 @@
-import Service from '../services';
+import { userService } from '../services';
 
-const getUserInfo = async (req, res) => {
-  const getUserInfo = await Service.userService.getUserInfo()
-  res.json(getUserInfo);
+const getAllUserInfo = async (req, res) => {
+  try{
+    const getAllUserInfo = await userService.getAllUserInfo()
+    res.json(getAllUserInfo);
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
 const createUser = async (req, res) => {
-  const {email, password, user_name, address, phone_number, policy_agreed} = req.body;
-  const createUser = await Service.userService.createUser(email, password, user_name, address, phone_number, policy_agreed);  
-  res.json(createUser);
+ try{
+    const userData = req.body;
+    const createUser = await userService.createUser(userData);  
+  if(createUser == undefined) {
+    res.json ({
+      message: '회원가입 성공'
+    })} else {
+    res.json ({
+      message: '이미 사용중인 이메일 입니다.'
+    })
+  };
+  }
+  catch(err) {
+    console.error(err);
+  };
 };
 
 const userLogin = async (req, res) => {
-  const {email, password} = req.body;
-  const login = await Service.userService.userLogin(email, password);
-  res.json(login);
+  try{
+    const {email, password} = req.body;
+    const token = await userService.userLogin(email, password);
+  if(token == undefined){ 
+    res.json ({
+      message: '이메일 혹은 비밀번호가 일치하지 않습니다.'
+    })} else {
+    res.json({
+        message: '로그인 성공'
+      })
+    res.cookie ('token', token)
+  }
+  } 
+  catch(err) {
+    console.error(err);
+  };
 };
  
 export default {
-  getUserInfo,
+  getAllUserInfo,
   createUser,
   userLogin
 };

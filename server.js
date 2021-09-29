@@ -9,9 +9,9 @@ const PORT = 8000 | process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded( {extended : true } ));
 
-app.use( Route.categoryRoute );
-app.use( Route.productRoute );
-app.use( Route.userRoute );
+app.use(Route.categoryRoute);
+app.use(Route.productRoute);
+app.use(Route.userRoute);
 
 app.listen(PORT, (err) => {
   if (!err) {
