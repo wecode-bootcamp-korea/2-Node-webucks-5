@@ -12,6 +12,11 @@ const getDrinkDetail = async () => {
 
 const getDrinkDetailById = async id => {
   const drinkDetailById = await drinkDao.getDrinkDetailById(id);
+  if (drinkDetailById === undefined) {
+    const err = new Error("NOT_FOUND");
+    err.statusCode = 404;
+    throw err;
+  }
   return drinkDetailById;
 };
 

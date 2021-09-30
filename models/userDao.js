@@ -16,7 +16,7 @@ const findAllUsers = async () => {
 };
 
 const getUserInfo = async (email) => {
-  return await prisma.$queryRaw`
+  const [ userInfo ] = await prisma.$queryRaw`
     SELECT
       u.email, 
       u.password
@@ -24,27 +24,27 @@ const getUserInfo = async (email) => {
       users u
     WHERE
       u.email = ${email}
+    LIMIT 1
   `;
+  return userInfo;
 };
 
-const createUser = async (email, hash, username, address, phone_number, policy_agreed) => {
+const createUser = async (userData) => {
   return await prisma.$queryRaw`
-    INSERT INTO
-      users(
-        email,
-        password,
-        username,
-        address,
-        phone_number,
-        policy_agreed
-      )
-    VALUES (
-      ${email},
-      ${hash},
-      ${username},
-      ${address},
-      ${phone_number},
-      ${policy_agreed}
+    INSERT INTO users(
+      email,
+      password,
+      username,
+      address,
+      phone_number,
+      policy_agreed
+    ) VALUES (
+      ${userData.email},
+      ${userData.password},
+      ${userData.username},
+      ${userData.address},
+      ${userData.phone_number},
+      ${userData.policy_agreed}
     )
   `;
 };

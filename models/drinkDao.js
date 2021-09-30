@@ -43,7 +43,7 @@ const getDrinkDetail = async () => {
 };
 
 const getDrinkDetailById = async id => {
-  return await prisma.$queryRaw`
+  const [ drinkDetailById ] =  await prisma.$queryRaw`
     SELECT 
       d.id, 
       d.korean_name,
@@ -69,6 +69,7 @@ const getDrinkDetailById = async id => {
     WHERE
       d.id = ${id}
   `;
+  return drinkDetailById;
 };
 
 export default { getDrinkList, getDrinkDetail, getDrinkDetailById };
