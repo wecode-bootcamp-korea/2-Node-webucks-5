@@ -27,7 +27,10 @@ const productDetailById = async (req, res) => {
     res.json(productDetailById);
   }
   catch(err) {
-    console.error(err);
+    const {statusCode, message} = err
+    res.status(statusCode || 500).json({
+      message
+    })
   };
 };
 

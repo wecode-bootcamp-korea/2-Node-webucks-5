@@ -8,7 +8,7 @@ const createUser = async (userData) => {
                 , password
                 , user_name
                 , address
-                , phone_number
+                , phone_number 
                 , policy_agreed
                 )
     VALUES( ${email}
@@ -22,7 +22,7 @@ const createUser = async (userData) => {
 };
 
 const getAllUserInfo = async () => {
-  return await prisma.$queryRaw`
+  const [getAllUserInfo] = await prisma.$queryRaw`
     SELECT  u.email
           , u.password
           , u.user_name
@@ -31,23 +31,27 @@ const getAllUserInfo = async () => {
           , u.policy_agreed
     FROM  users u;
   `;
+  return getAllUserInfo;
 };
 
 const checkUserEmail = async (email) => {
-  return await prisma.$queryRaw`
+  const [checkUserEmail] = await prisma.$queryRaw`
     SELECT  u.email
     FROM  users u
     WHERE u.email = ${email};
   `;
+  return checkUserEmail
 }
 
 const userLogin = async (email) => {
-  return await prisma.$queryRaw`
+  const [userLogin] = await prisma.$queryRaw`
     SELECT  u.email
           , u.password
     FROM  users u
     WHERE u.email = ${email}
+    LIMiT 1
   `;
+  return userLogin
 }
 
 export default {

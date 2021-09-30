@@ -12,7 +12,7 @@ generator client {
 
 model Category {
   id      Int       @id @default(autoincrement())
-  name    String    @db.VarChar(20)
+  name    String    @db.VarChar(50)
   product Product[]
 
   @@map("categories")
@@ -21,9 +21,11 @@ model Category {
 model Product {
   id             Int              @id @default(autoincrement())
   koreanName     String           @map("korean_name") @db.VarChar(50)
-  englishName    String           @map("english_name") @db.VarChar(50)
-  descriptions   String           @db.VarChar(500)
+  englishName    String           @map("english_name") @db.VarChar(100)
+  descriptions   String           @db.VarChar(3000)
   categoryId     Int              @map("category_id")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @default(now()) @map("updated_at")
   category       Category         @relation(fields: [categoryId], references: [id])
   image          Image[]
   productAllergy ProductAllergy[]
@@ -34,7 +36,7 @@ model Product {
 
 model Image {
   id        Int     @id @default(autoincrement())
-  imageUrl  String  @map("image_url") @db.VarChar(300)
+  imageUrl  String  @map("image_url") @db.VarChar(2000)
   productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id])
 
@@ -43,7 +45,7 @@ model Image {
 
 model Allergy {
   id             Int              @id @default(autoincrement())
-  name           String           @db.VarChar(20)
+  name           String           @db.VarChar(50)
   productAllergy ProductAllergy[]
 
   @@map("allergies")
@@ -61,11 +63,11 @@ model ProductAllergy {
 
 model Nutrition {
   id        Int     @id @default(autoincrement())
-  kcal      Int
-  fat       Int
-  protein   Int
-  natrium   Int
-  sugal     Int
+  kcal      Decimal
+  fat       Decimal
+  protein   Decimal
+  natrium   Decimal
+  sugal     Decimal
   caffeine  Int
   productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id])
@@ -74,13 +76,16 @@ model Nutrition {
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  email        String  @unique @db.VarChar(100)
-  password     String  @db.VarChar(100)
-  userName     String? @map("user_name") @db.VarChar(30)
-  address      String? @db.VarChar(100)
-  phoneNumber  String? @map("phone_number") @db.VarChar(30)
-  policyAgreed Boolean @default(true) @map("policy_agreed")
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.VarChar(200)
+  password     String   @db.VarChar(100)
+  userName     String?  @map("user_name") @db.VarChar(50)
+  address      String?  @db.VarChar(500)
+  phoneNumber  String?  @map("phone_number") @db.VarChar(50)
+  policyAgreed Boolean  @default(true) @map("policy_agreed")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+
 
   @@map("users")
 }
