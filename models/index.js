@@ -1,6 +1,6 @@
-import categoryDao from './categoryDao.js';
-import drinkDao from './drinkDao.js'
-import userDao from './userDao.js';
+import categoryDao from './categoryDao';
+import drinkDao from './drinkDao'
+import userDao from './userDao';
 
 
 export { 

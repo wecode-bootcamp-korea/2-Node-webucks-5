@@ -2,6 +2,6 @@ import categoryController from ('./categoryController')
 import drinkController from ('./drinkController')
 import userController from ('./userController')
 
-module.exports = {
+export {
   categoryController, drinkController, userController
 }

@@ -1,11 +1,20 @@
 import userService from "../services/userService.js";
 
-const joinUser = async (req, res) => {
-  console.log('userService hello1');
-  const users = await userService.joinUser();
+const getUserInfo = async (req, res) => {
+  const users = await userService.getUserInfo();
+  res.json(users);
+}
+
+const signUpUser = async (req, res) => {
+  const users = await userService.signUpUser(req.body);
+  res.json(users);
+}
+
+const userLogin = async (req, res) => {
+  const users = await userService.userLogin(req.body);
   res.json(users);
 }
 
 export default {
-  joinUser
+  signUpUser, getUserInfo, userLogin
 }
