@@ -1,90 +1,62 @@
-generator client {
-  provider = "prisma-client-js"
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  id           Int     @id @default(autoincrement())
-  categoryName String  @map("category_name")
-  Drink        Drink[]
-
-  @@map("categories")
-}
-
-model Drink {
-  id           Int            @id @default(autoincrement())
-  koreanName   String         @map("korean_name")
-  enlishName   String         @map("english_name")
-  categoryId   Int            @map("category_id")
-  description  String
-  new          Boolean
-  category     Category       @relation(fields: [categoryId], references: [id])
-  DrinkAllergy DrinkAllergy[]
-  Image        Image[]
-  Nutrition    Nutrition[]
-
-  @@index([categoryId], map: "drinks_category_id_fkey")
-  @@map("drinks")
-}
-
-model Image {
-  id      Int    @id @default(autoincrement())
-  image   String
-  drinkId Int    @map("drink_id")
-  drink   Drink  @relation(fields: [drinkId], references: [id])
-
-  @@index([drinkId], map: "images_drink_id_fkey")
-  @@map("images")
-}
-
-model DrinkAllergy {
-  id        Int     @id @default(autoincrement())
-  drinkId   Int     @map("drink_id")
-  allergyId Int     @map("allergy_id")
-  allergy   Allergy @relation(fields: [allergyId], references: [id])
-  drink     Drink   @relation(fields: [drinkId], references: [id])
-
-  @@index([allergyId], map: "drinks_allergies_allergy_id_fkey")
-  @@index([drinkId], map: "drinks_allergies_drink_id_fkey")
-  @@map("drinks_allergies")
-}
-
-model Allergy {
-  id           Int            @id @default(autoincrement())
-  allergyName  String         @map("allergy_name")
-  DrinkAllergy DrinkAllergy[]
-
-  @@map("allergies")
-}
-
-model Nutrition {
-  id          Int     @id @default(autoincrement())
-  servingSize String  @map("serving_size")
-  kcal        Int
-  fat         Decimal
-  protein     Decimal
-  natrium     Decimal
-  sugars      Decimal
-  caffeine    Int
-  drinkId     Int     @map("drink_id")
-  drink       Drink   @relation(fields: [drinkId], references: [id])
-
-  @@index([drinkId], map: "nutritions_drink_id_fkey")
-  @@map("nutritions")
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  email        String  @unique
-  password     String
-  userName     String? @map("user_name")
-  address      String?
-  phoneNumber  Int?    @map("phone_number")
-  policyAgreed Boolean @default(true) @map("policy_agreed")
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(100)
+  password     String    @db.VarChar(100)
+  address      String    @db.VarChar(100)
+  createdAt    DateTime? @default(now()) @map("created_at")
+  updatedAt    DateTime? @default(now()) @map("updated_at")
+  isDeleted    Boolean   @default(false) @map("is_deleted")
+  policyAgreed Boolean   @default(false) @map("policy_agreed")
 
   @@map("users")
+}
+
+model Product {
+  id                 Int       @id @default(autoincrement())
+  koreanName         String    @map("korean_name") @db.VarChar(100)
+  englishName        String    @map("english_name") @db.VarChar(100)
+  price              Int
+  category           Category  @relation(fields: [categoryId], references: [id])
+  categoryId         Int       @map("category_id")
+  description        String    @db.VarChar(3000)
+  textileInformation String    @map("textile_information") @db.VarChar(3000)
+  isNew              Boolean   @default(false) @map("is_new")
+  isSoldout          Boolean   @default(false) @map("is_soldout")
+  isSale             Boolean   @default(false) @map("is_sale")
+  createdAt          DateTime? @default(now()) @map("created_at")
+  Image              Image[]
+
+  @@map("products")
+}
+
+model Category {
+  id           Int    @id @default(autoincrement())
+  categoryName String @map("category_name") @db.VarChar(100)
+
+  Product Product[]
+  @@map("categories")
+}
+
+model Image {
+  id             Int     @id @default(autoincrement())
+  mainImageUrl   String  @map("main_image_url") @db.VarChar(3000)
+  subImageUrl    Json    @map("sub_image_url")
+  detailImageUrl Json    @map("detail_image_url")
+  productId      Int     @map("product_id")
+  product        Product @relation(fields: [productId], references: [id])
+
+  @@map("images")
 }

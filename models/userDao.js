@@ -14,35 +14,35 @@ const getUserInfo = async () => {
   `;
 }
 
+const getUserEmailInfo = async email => {
+  return await prisma.$queryRaw`
+  SELECT
+      u.email
+  FROM
+      users u
+  WHERE
+      email = ${email}
+  `;
+}
+
 const signUpUser = async (user) => {
+  const { email, password, user_name, address, phone_number} = user;
   return await prisma.$queryRaw`
   INSERT INTO users (email, password, user_name, address, phone_number, policy_agreed)
   VALUES  (${user.email}, ${user.password}, ${user.user_name}, ${user.address}, ${user.phone_number}, ${user.policy_agreed});
   `;
 }
 
-const userLogin = async () => {
+const userLogin = async (email) => {
   return await prisma.$queryRaw`
   SELECT
       u.email
     , u.password
   FROM  users u
+  WHERE email = ${email}
   `;
 }
 
 export default { 
-  signUpUser, getUserInfo, userLogin
+  signUpUser, getUserInfo, userLogin, getUserEmailInfo
 }
-
-
-// app.post('/users', async (req, res) => {
-//   for(let key in req.body.users){
-//   const { email, password, user_name, address, phone_number, policy_agreed } = req.body.users[key];
-//   const user = await prisma.$queryRaw`
-//   INSERT INTO users (email, password, user_name, address, phone_number, policy_agreed)
-//   VALUES  (${email}, ${password}, ${user_name}, ${address}, ${phone_number}, ${policy_agreed});
-//   `;
-
-//   res.json(user);
-//   }
-// });

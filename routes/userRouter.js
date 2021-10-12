@@ -8,3 +8,4 @@ userRouter.post('/signup', userController.signUpUser)
 userRouter.post('/login', userController.userLogin)
 
 export default userRouter;
+
