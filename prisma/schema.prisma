@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(50)
+  product Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id             Int              @id @default(autoincrement())
+  koreanName     String           @map("korean_name") @db.VarChar(50)
+  englishName    String           @map("english_name") @db.VarChar(100)
+  descriptions   String           @db.VarChar(3000)
+  categoryId     Int              @map("category_id")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @default(now()) @map("updated_at")
+  category       Category         @relation(fields: [categoryId], references: [id])
+  image          Image[]
+  productAllergy ProductAllergy[]
+  nutrition      Nutrition[]
+
+  @@map("products")
+}
+
+model Image {
+  id        Int     @id @default(autoincrement())
+  imageUrl  String  @map("image_url") @db.VarChar(2000)
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("images")
+}
+
+model Allergy {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(50)
+  productAllergy ProductAllergy[]
+
+  @@map("allergies")
+}
+
+model ProductAllergy {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+  allergyId Int     @map("allergy_id")
+  allergy   Allergy @relation(fields: [allergyId], references: [id])
+
+  @@map("products_allergies")
+}
+
+model Nutrition {
+  id        Int     @id @default(autoincrement())
+  kcal      Decimal
+  fat       Decimal
+  protein   Decimal
+  natrium   Decimal
+  sugal     Decimal
+  caffeine  Int
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("nutritions")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.VarChar(200)
+  password     String   @db.VarChar(100)
+  userName     String?  @map("user_name") @db.VarChar(50)
+  address      String?  @db.VarChar(500)
+  phoneNumber  String?  @map("phone_number") @db.VarChar(50)
+  policyAgreed Boolean  @default(true) @map("policy_agreed")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+
+
+  @@map("users")
+}
